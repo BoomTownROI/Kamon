@@ -15,6 +15,7 @@
 
 import sbt._
 import sbt.Keys._
+import scala.util.Properties
 
 object Publish {
 
@@ -27,8 +28,8 @@ object Publish {
     publishMavenStyle := true,
     publishArtifact in Test := false
   )
-
-  def kamonRepo = Some(Resolver.sftp("Kamon Snapshots Repository", "snapshots.kamon.io", "/var/local/snapshots-repo"))
+  val baseUrl: String = "http://artifactory.ad.boomtownroi.com/artifactory"
+  def kamonRepo = Some("Artifactory Realm" at s"$baseUrl/libs-release-local")
 
   def kamonPomExtra = {
     <url>http://kamon.io</url>

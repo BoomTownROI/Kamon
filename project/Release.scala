@@ -45,12 +45,13 @@ object Release {
     sonatypeSettings ++
     Seq(
       // sbt-sonatype overrides publishTo. So we need to restore kamon repo declaration for snapshots
-      publishTo := { if (isSnapshot.value) Publish.kamonRepo else publishTo.value }
+      publishTo := { if (isSnapshot.value) Publish.kamonRepo else Publish.kamonRepo },
+      credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
     )
 
 
   def kamonSonatypeCredentials =
-    Credentials.toDirect(Credentials(Path.userHome / ".ivy2" / "kamon-credentials-sonatype.properties"))
+    Credentials(Path.userHome / ".ivy2" / ".credentials")
 
   /**
    * Hijacked from [[sbtrelease.ReleaseStateTransformations.publishArtifacts]]
